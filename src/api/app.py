@@ -5,8 +5,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional
-import sys
-from pathlib import Path
 from src.predict import CreditRiskPredictor
 
 app = FastAPI(title="Credit Risk API")
