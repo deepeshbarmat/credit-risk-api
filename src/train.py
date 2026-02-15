@@ -10,6 +10,9 @@ import mlflow
 import mlflow.sklearn
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score, f1_score
 import datetime
+import argparse
+import shutil
+import os
 
 from features.build_features import build_feature_pipeline
 from models.model import get_model
@@ -25,7 +28,7 @@ run_name = f"XGBoost_{timestamp}"
 # --------------------------
 # train_model - Main function to train the model, evaluate it, and save the model and preprocessor.
 # --------------------------
-def train_model():
+def train_model(model_name):
     # Load and prepare data
     credit_risk_df = load_data()
     credit_risk_df = credit_risk_df.drop(credit_risk_df.columns[0], axis=1)
@@ -37,7 +40,7 @@ def train_model():
 
     # Build preprocessing pipeline and transform data
     preprocessor = build_feature_pipeline(X_train)
-    model = get_model("xgb")
+    model = get_model(model_name)
 
     pipeline = Pipeline(steps=[
         ("preprocessor", preprocessor),
@@ -70,8 +73,27 @@ def train_model():
         "CreditRiskModel"
     )
 
+    if os.path.exists("models/credit-risk-pipeline"):
+        shutil.rmtree("models/credit-risk-pipeline")
+    
+    # Save the model locally for API usage
+    mlflow.sklearn.save_model(
+        sk_model=pipeline,
+        path="models/credit-risk-pipeline"
+    )
+
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--model",
+        type=str,
+        default="xgb",
+        choices=["xgb", "logreg"],
+        help="Model to train",
+    )
+
+    args = parser.parse_args()
     with mlflow.start_run(run_name=run_name):
-        train_model()
+        train_model(args.model)
 

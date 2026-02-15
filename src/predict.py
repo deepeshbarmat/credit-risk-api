@@ -5,7 +5,7 @@
 import mlflow
 import pandas as pd
 
-MODEL_URI = "models:/CreditRiskModel/latest"
+MODEL_URI = "models/credit-risk-pipeline"
 
 # --------------------------
 # CreditRiskPredictor - Class to load the trained model and make predictions.
