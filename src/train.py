@@ -50,7 +50,6 @@ def train_model(model_name):
     preds = pipeline.predict(X_test)
     probs = pipeline.predict_proba(X_test)[:, 1]
 
-    
     print("Classification Report:\n", classification_report(y_test, preds))
     print("Confusion Matrix:\n", confusion_matrix(y_test, preds))
     print("Accuracy Score:", accuracy_score(y_test, preds))
@@ -62,10 +61,10 @@ def train_model(model_name):
 
     # Save the pipeline to MLflow
     mlflow.sklearn.log_model(
-            sk_model=pipeline,
-            name="credit-risk-pipeline",
-            input_example=X_train.head(5),
-        )
+        sk_model=pipeline,
+        name="credit-risk-pipeline",
+        input_example=X_train.head(5),
+    )
     
     mlflow.register_model(
         f"runs:/{mlflow.active_run().info.run_id}/credit-risk-pipeline",
@@ -95,4 +94,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     with mlflow.start_run(run_name=run_name):
         train_model(args.model)
-
+    

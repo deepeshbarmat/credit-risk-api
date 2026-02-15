@@ -7,9 +7,6 @@ from pydantic import BaseModel
 from typing import Optional
 import sys
 from pathlib import Path
-
-sys.path.insert(0, str(Path().resolve().parent))
-
 from src.predict import CreditRiskPredictor
 
 app = FastAPI(title="Credit Risk API")
