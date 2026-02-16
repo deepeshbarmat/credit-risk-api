@@ -25,14 +25,15 @@ def test_predict_endpoint():
         "Sex": "male",
         "Job": 2,
         "Housing": "own",
-        "Saving accounts": "moderate",
-        "Checking account": "little",
-        "Credit amount": 5000,
+        "Saving_accounts": "moderate",
+        "Checking_account": "little",
+        "Credit_amount": 5000,
         "Duration": 24,
         "Purpose": "car"
     }
 
     response = client.post("/predict", json=sample_payload)
+    print(response.json())
 
     assert response.status_code == 200
 
