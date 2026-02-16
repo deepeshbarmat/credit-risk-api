@@ -13,9 +13,9 @@ import argparse
 import shutil
 import os
 
-from features.build_features import build_feature_pipeline
-from models.model import get_model
-from utils import load_data
+from src.features.build_features import build_feature_pipeline
+from src.models.model import get_model
+from src.utils import load_data
 import warnings
 warnings.filterwarnings("ignore")
 

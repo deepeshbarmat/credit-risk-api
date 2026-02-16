@@ -9,7 +9,7 @@ from src.predict import CreditRiskPredictor
 
 app = FastAPI(title="Credit Risk API")
 
-predictor = CreditRiskPredictor()
+predictor = None
 
 # -------------------------
 # Input Schema
@@ -32,6 +32,13 @@ class CreditInput(BaseModel):
 def health():
     return {"status": "ok"}
 
+# -------------------------
+# Load the model at startup
+# -------------------------
+@app.on_event("startup")
+def load_model():
+    global predictor
+    predictor = CreditRiskPredictor()
 
 # -------------------------
 # Prediction Endpoint
