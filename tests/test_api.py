@@ -33,7 +33,6 @@ def test_predict_endpoint():
     }
 
     response = client.post("/predict", json=sample_payload)
-    print(response.json())
 
     assert response.status_code == 200
 

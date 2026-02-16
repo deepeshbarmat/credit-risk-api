@@ -60,11 +60,6 @@ def predict(input: CreditInput):
         "Purpose": input_dict["Purpose"],
     }
 
-    global predictor
-
-    if predictor is None:
-        predictor = CreditRiskPredictor()
-
     result = predictor.predict(formatted_input)
 
     return result
